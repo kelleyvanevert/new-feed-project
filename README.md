@@ -1,68 +1,136 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Class 43 - React day 2 warmup
 
-## Available Scripts
+## Recap of yesterday
 
-In the project directory, you can run:
+**react**
 
-### `yarn start`
+- open source js library for building user interfaces
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**keeping your codebase dry by splitting it up into reusable pieces**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- ```jsx
+  import data from "./data.json";
+  import Title from "./components/Title";
+  ```
 
-### `yarn test`
+**map**
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- method that creates a new array with the results of calling the function on each element in the array
 
-### `yarn build`
+  ```jsx
+  ["Elsie", "Heleen", "Kelley"].map((name) => {
+    return <li>{name}</li>;
+  });
+  ```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  ~~> evaluates to ~~>
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+  ```jsx
+  [<li>Elsie</li>, <li>Heleen</li>, <li>Kelley</li>];
+  ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  just like `4 + 5` ~~> evaluates to ~~> `9`
 
-### `yarn eject`
+**html**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- `<ul>` / `<ol>` unordered list, ordered list
+- `<li>` list item
+- and more...
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**interpolation**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- taking javascript data and turning/putting it into jsx
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**conditional rendering**
 
-## Learn More
+- because booleans don't show up, we need to use an if statement or a ternary operator
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**props and components**
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- component is a blueprint for a part of a website which can be placed on several different places of a website, with different props
+- props are data which can be placed inside components
+- component is just a function
+- definition v instance of components
+- imagine you're going to build up your app with these components
 
-### Code Splitting
+**css flexbox**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- use it to put two divs next to each other
+  https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 
-### Analyzing the Bundle Size
+**bootstrap and scss (and maybe css grid)**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+- bootstrap is a library, css written by other people that you can use
+- scss is actually a language
+- css grid is like flex, but then for two dimensional positioning
 
-### Making a Progressive Web App
+**github**
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+- a place to place your project repo's online and share them with your project partners / colleagues
 
-### Advanced Configuration
+## Today
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+**What is state?**
 
-### Deployment
+- it's like an attribute of your component
+- state is associated data, can change over time
+- it's "remembered changeable data"
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Typical example:
 
-### `yarn build` fails to minify
+```jsx
+export default function CounterButton() {
+  console.log("render: CounterButton");
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  // remember: how many times
+  //  was this button clicked on ?
+  const [count, setCount] = useState(0);
+
+  return (
+    <button
+      onClick={() => {
+        console.log("did I get called?");
+        setCount(count + 1);
+      }}
+    >
+      Clicked: {count}
+    </button>
+  );
+}
+```
+
+### HTML vs JSX vs DOM
+
+**HTML**
+
+- is the "language" / "syntax",
+- _"this file (e.g. `about.html`) is an html file"_
+
+**JSX**
+
+- is a javascript expression (which turns into a javascript object) which "describes" html, for example:
+
+  ```jsx
+  <div className="person">{name}</div>
+  ```
+
+- you write JSX in React components
+- you can interpolate JS values into it, etc.
+
+**DOM**
+
+- the actual "living breathing document" (_document object model_) on the website you're looking at
+
+**How react renders your components**
+
+- We describe what we _want to see_ with JSX:
+
+  ```jsx
+  function App() {
+    return <div>hello</div>;
+  }
+  ```
+
+- React calls your function to get this "virtual DOM" description
+
+- React compares this "virtual DOM" to the actual DOM, and adds/changes/removes DOM to make it look like what we want
